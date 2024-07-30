@@ -22,7 +22,7 @@ For detailed instructions on loading data into BigQuery, refer to the [BigQuery 
 
 1. Navigate to the BigQuery console in your GCP project.
 2. Go to the Notebooks section.
-3. Upload the "BQ+Claude3_Art_Sample" notebook to BigQuery.
+3. Upload the "BQ+Claude_Museum_Art_Sample" notebook to BigQuery.
 
 For step-by-step instructions on uploading notebooks to BigQuery, follow the guide in the [official documentation](https://cloud.google.com/bigquery/docs/create-notebooks#upload_notebooks).
 
