@@ -1,4 +1,4 @@
-# BQ+Claude3 Art Sample Project
+# BQ+Claude Art Sample Project
 
 This README provides instructions for setting up and running the BQ+Claude3 Art Sample project.
 
