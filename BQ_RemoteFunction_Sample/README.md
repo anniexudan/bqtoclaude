@@ -86,7 +86,7 @@ OPTIONS (endpoint = 'https://[YOUR Function URI....]', max_batching_rows = 1);
 SELECT
   title,
   `[yourproject].[yourdataset]`.claude35Sonnet(CONCAT("translate this into English and only return the translated result:", title)) AS translated_title
-FROM anthropic.museum_objects
+FROM [yourprojectid].[your table]
 WHERE title IS NOT NULL 
 LIMIT 1;
 ```
