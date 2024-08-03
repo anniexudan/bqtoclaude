@@ -6,7 +6,6 @@ This README provides instructions for setting up and running the BQ+Claude3 Art 
 
 - Access to Google Cloud Platform (GCP)
 - BigQuery enabled in your GCP project
-- Python environment (for running the sample notebook)
 
 ## Setup Instructions
 
