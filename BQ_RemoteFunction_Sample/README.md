@@ -91,5 +91,5 @@ WHERE title IS NOT NULL
 LIMIT 1;
 ```
 
-This README provides a step-by-step guide to set up and use a BigQuery Remote Function with Anthropic's Claude 3.5 Sonnet model.
+This README provides a step-by-step guide to set up and use a BigQuery Remote Function with Anthropic's Claude model.
 
