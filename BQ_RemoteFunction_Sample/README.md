@@ -13,7 +13,7 @@ This README provides instructions for setting up a BigQuery Remote Function that
    - BigQuery User
 2. Grant Service Accounts IDs access between different services (see Step 2)
 
-# Step 1: Enable Vertex AI API and Enable Claude Models on Vertex AI 
+## Step 1: Enable Vertex AI API and Enable Claude Models on Vertex AI 
 You can follow this documentation: [Link to Claude On Vertex AI Doc](https://cloud.google.com/vertex-ai/generative-ai/docs/partner-models/use-claude#before_you_begin_)
 
 ## Step 2: Create Cloud Function using the [Create Cloud Function Doc](https://cloud.google.com/functions/docs/create)
