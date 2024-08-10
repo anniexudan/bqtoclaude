@@ -6,7 +6,7 @@ This README provides instructions for setting up a BigQuery Remote Function that
 - [BQ Remote function Doc](https://cloud.google.com/bigquery/docs/remote-functions)
 - [Create Cloud Function Doc](https://cloud.google.com/functions/docs/create)
 
-## Required Access
+# Required Access
 1. Developer needs to have the following roles:
    - Cloud Run Developer
    - Vertex AI User
