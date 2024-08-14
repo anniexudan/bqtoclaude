@@ -6,14 +6,17 @@ This README provides instructions for setting up a BigQuery Remote Function that
 - [BQ Remote function Doc](https://cloud.google.com/bigquery/docs/remote-functions)
 - [Create Cloud Function Doc](https://cloud.google.com/functions/docs/create)
 
-## Required Access
+# Required Access
 1. Developer needs to have the following roles:
    - Cloud Run Developer
    - Vertex AI User
    - BigQuery User
 2. Grant Service Accounts IDs access between different services (see Step 2)
 
-## Step 1: Create Cloud Function using the [Create Cloud Function Doc](https://cloud.google.com/functions/docs/create)
+## Step 1: Enable Vertex AI API and Enable Claude Models on Vertex AI 
+You can follow this documentation: [Link to Claude On Vertex AI Doc](https://cloud.google.com/vertex-ai/generative-ai/docs/partner-models/use-claude#before_you_begin_)
+
+## Step 2: Create Cloud Function using the [Create Cloud Function Doc](https://cloud.google.com/functions/docs/create)
 You can use the provided Sample Code below or in the /CloudFunction folder in this folder
 ### requirements.txt
 ```
@@ -70,10 +73,10 @@ def claude_http(request: flask.Request) -> flask.Response:
 }
 ```
 
-## Step 2: Create BQ Remote Function Connection
+## Step 3: Create BQ Remote Function Connection
 Follow the [documentation](https://cloud.google.com/bigquery/docs/remote-functions#create_a_connection) to create a BigQuery Remote Function Connection and set up proper IAM access. Additionally, grant Cloud Run access to the Vertex AI user role.
 
-## Step 3: Create BQ Remote Function
+## Step 4: Create BQ Remote Function
 ```sql
 CREATE OR REPLACE FUNCTION
  `[yourproject].[yourdataset].claude35Sonnet`(prompt STRING) RETURNS STRING
@@ -81,7 +84,7 @@ REMOTE WITH CONNECTION `[yourproject].us.llm_connection`
 OPTIONS (endpoint = 'https://[YOUR Function URI....]', max_batching_rows = 1);
 ```
 
-## Step 4: Query the Function
+## Step 5: Query the Function
 ```sql
 SELECT
   title,
