@@ -36,6 +36,22 @@ resource "google_cloud_run_service_iam_member" "cloud_run_invoker" {
   member   = "serviceAccount:${google_service_account.bqclaude_sa.email}"
 }
 
+resource "google_cloudfunctions2_function_iam_member" "bq_conn_sa_cf" {
+  project        = var.project
+  location       = var.region
+  cloud_function = google_cloudfunctions2_function.function.name
+  role           = "roles/cloudfunctions.invoker"
+  member         = "serviceAccount:${google_bigquery_connection.remote_function.cloud_resource[0].service_account_id}"
+}
+
+resource "google_cloud_run_service_iam_member" "bq_conn_sa_cloud_run_invoker" {
+  project  = var.project
+  location = var.region
+  service  = google_cloudfunctions2_function.function.name
+  role     = "roles/run.invoker"
+  member   = "serviceAccount:${google_bigquery_connection.remote_function.cloud_resource[0].service_account_id}"
+}
+
 resource "google_project_iam_member" "bqclaude_sa_secrets" {
   project = var.project
   role    = "roles/secretmanager.secretAccessor"

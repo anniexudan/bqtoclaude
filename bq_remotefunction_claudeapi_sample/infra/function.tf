@@ -15,14 +15,15 @@
  */
 
 resource "google_cloudfunctions2_function" "function" {
-  name = "bqclaude-remotefunction"
-  location = var.region
-  description = "a new function"
-  project=var.project
+  name        = "bqclaude-remotefunction"
+  location    = var.region
+  description = "Claude API interaction function which will be called from a BQ routine."
+  project     = var.project
 
   build_config {
-    runtime = "java21"
+    runtime     = "java21"
     entry_point = "io.micronaut.gcp.function.http.HttpFunction"
+
     source {
       storage_source {
         bucket = google_storage_bucket.cf_bucket.name
@@ -32,15 +33,16 @@ resource "google_cloudfunctions2_function" "function" {
   }
 
   service_config {
-    min_instance_count = 1
-    max_instance_count  = 1
+    min_instance_count               = 1
+    max_instance_count               = 1
     max_instance_request_concurrency = 3
-    available_memory    = "2G"
-    available_cpu       = 2
-    timeout_seconds     = 60
-    service_account_email = google_service_account.bqclaude_sa.email
+    available_memory                 = "2G"
+    available_cpu                    = 2
+    timeout_seconds                  = 60
+    service_account_email            = google_service_account.bqclaude_sa.email
+
     secret_environment_variables {
-        key        = "CLAUDE_TOKENS"
+      key        = "CLAUDE_TOKENS"
       project_id = var.project
       secret     = google_secret_manager_secret.claude_tokens.secret_id
       version    = "latest"

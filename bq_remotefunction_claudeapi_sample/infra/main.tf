@@ -33,12 +33,28 @@ variable "region" {
     default = "us-central1"
 }
 
+variable "routine_dataset" {}
+
 variable "claude_tokens" {
-    type = list(string)
+    type        = list(string)
     description = "Claude API token list."
-    sensitive = true
+    sensitive   = true
 }
 
+variable "max_batching_rows" {
+    default = 10
+}
+
+variable "max_tokens" {
+    type    = string
+    default = "1024"
+}
+
+variable "system_prompt" {
+    default = ""
+}
+
+
 output "remote_service_url" {
-    value =google_cloudfunctions2_function.function.url
+    value = google_cloudfunctions2_function.function.url
 }

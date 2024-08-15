@@ -29,7 +29,7 @@ resource "google_storage_bucket" "cf_bucket" {
 }
 
 resource "google_storage_bucket_object" "cf_code" {
-  name   = "function/bqclaude-remotefunction-0.1.jar"
+  name   = "function/bqclaude-remotefunction.zip"
   bucket = google_storage_bucket.cf_bucket.name
   source = data.archive_file.function_zip.output_path
 }

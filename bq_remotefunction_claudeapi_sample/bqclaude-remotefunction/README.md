@@ -1,3 +1,9 @@
+# Sample Cloud Function HTTP Service for BigQuery remote function
+
+This folder includes a full Java based Cloud Function HTTP service that can be used to connect a BigQuery remote function with Claude API.
+
+In the parent folder, a couple of shell scripts are provided to take care of setting up the full solution. Refer to the Micronaut documentation to see the steps for testing and deploying this code manually.
+
 ## Micronaut 4.5.1 Documentation
 
 - [User Guide](https://docs.micronaut.io/4.5.1/guide/index.html)

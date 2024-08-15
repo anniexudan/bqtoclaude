@@ -3,7 +3,7 @@ set -eu
 
 if [ "$#" -ne 3 ]
   then
-    echo "Usage : sh setup.sh <gcp project> <state-bucket-name> <bq dataset for routine>"
+    echo "Usage : sh destroy.sh <gcp project> <state-bucket-name> <bq dataset for routine>"
     exit -1
 fi
 
@@ -13,7 +13,7 @@ PROJECT=$1
 
 pushd "bqclaude-remotefunction"
 
-mvn clean install
+mvn clean
 
 popd
 
@@ -22,7 +22,7 @@ pushd "infra"
 terraform init \
  -backend-config="bucket=$STATE_BUCKET" \
  -backend-config="prefix=terraform/state/bqclauderf" \
- && terraform apply     \
+ && terraform destroy     \
   -var="project=${PROJECT}" \
   -var="routine_dataset=${BQ_DATASET}"
 
