@@ -34,7 +34,7 @@ There are 3 methods you can use:
 | Compute Configurability | Subject to BQ Compute | Limited to runtime compute | Highly configurable in terms of compute and preferred language |
 | Ease of Use | Easy (SQL Skill Only) | Medium (Python) | Hard (App Development Skill + SQL Skill) |
 | Cost Model | [BQML Pricing](https://cloud.google.com/bigquery/pricing#bqml) | [External Services Pricing](https://cloud.google.com/bigquery/pricing#external_services) | Cloud Function pricing + BQ pricing |
-| Limitations | Subject to Preview Terms for BQML + Claude; Limited Model access; In this release 240 req/mins | Requires Python knowledge; currently only supports for-loops | Learning curve is high; Separate services; scalability in question, follows cloud function limitations |
+| Limitations | Subject to Preview Terms for BQML + Claude; Limited Model access; In this current release, the rate limit is 240 req/mins | Requires Python knowledge; currently only supports for-loops | Learning curve is high; Separate services; scalability in question, follows cloud function limitations |
 
 ## Comparing Claude on Vertex AI vs Direct API
 
