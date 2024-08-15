@@ -13,7 +13,7 @@ This repository stores code samples for BigQuery and Claude integration, taking 
 
 There are 3 methods you can use:
 
-1. **SQL with BQML:** This method enables SQL developers to easily harness the power of Claude within BigQuery's familiar SQL environment. [Code example](/Python_Notebook_Sample/BQML+Claude.ipynb).
+1. **SQL with BQML (Public Preview):** This method enables SQL developers to easily harness the power of Claude within BigQuery's familiar SQL environment. [Code example](/Python_Notebook_Sample/BQML+Claude.ipynb).
 
 **Beyond SQL, you can also use the following methods to increase flexibility:**
 
