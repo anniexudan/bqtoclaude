@@ -40,13 +40,13 @@ There are 3 methods you can use:
 
 For the last 2 methods, you can use a direct Claude API call or use Claude on Vertex AI. Here's a breakdown of the optimal use cases based on the pros and cons of each method:
 
-## When to use Claude on Vertex AI
+### When to use Claude on Vertex AI
 
 * **If you are already heavily invested in the Google Cloud ecosystem:** If you're already using other GCP services like BigQuery or Vertex AI, this option offers seamless integration and data co-location benefits.
 * **If you need a managed solution with strong security and compliance:** Vertex AI handles security, privacy, and infrastructure management, freeing you to focus on application development.
 * **If ease of setup is a priority:** It's easier to get started with Claude on Vertex AI if you're already familiar with GCP.
 
-## When to use Direct Call Claude API
+### When to use Direct Call Claude API
 
 * **If you need flexibility in pricing and model access:** The direct API offers more granular control over costs and gives you early access to the newest Claude model releases.
 * **If your infrastructure and data are not primarily on GCP:** This option might be better if you're using another cloud provider or have on-premises infrastructure.
