@@ -2,7 +2,7 @@
 
 This repository stores code samples for BigQuery and Claude integration, taking your data to the next level.
 
-## Use Cases
+## Use Cases Examples
 
 - Marketing departments can leverage user and product data to generate targeted social campaigns at scale.
 - Security departments can decipher log data, convert it into a human-understandable format, and generate appropriate responses.
