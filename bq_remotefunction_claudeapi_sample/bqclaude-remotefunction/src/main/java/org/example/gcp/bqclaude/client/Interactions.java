@@ -22,7 +22,10 @@ import io.micronaut.serde.annotation.Serdeable;
 import java.util.List;
 import java.util.Map;
 
-/** */
+/**
+ * Defines all the types needed to be exchanged with Claude API. Micronaut client will take care of
+ * the serialization/deserialization when executing the interactions.
+ */
 public interface Interactions {
 
   enum Role {
@@ -71,10 +74,6 @@ public interface Interactions {
 
   @Serdeable
   record ClaudeResponse(String tokenId, Body response, Map<String, List<String>> headers) {
-
-    static ClaudeResponse empty() {
-      return new ClaudeResponse("", new Body.Empty(), Map.of());
-    }
 
     static ClaudeResponse emptyWithHeaders(String tokenId, Map<String, List<String>> headers) {
       return new ClaudeResponse(tokenId, new Body.Empty(), headers);

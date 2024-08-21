@@ -20,8 +20,17 @@ In the parent folder, a couple of shell scripts are provided to take care of set
 ./mvnw function:run
 ```
 
-And visit http://localhost:8080/bqclaude-remotefunction
+Now you can send an example request with:
+```cmd
+curl -d '{"calls":[["show me stats from klay thompson last year"]]}' \
+    -H "Content-Type: application/json" \
+    -X POST http://localhost:8080/
+```
 ## Deploying the function
+
+Preferrably, use the `setup.sh` script located in the parent folder, given that it also takes care of provisioning all the needed resources. In case of just wanting to deploy the function, follow the steps on the next section.
+
+### Manual Deployment
 
 First build the function with:
 

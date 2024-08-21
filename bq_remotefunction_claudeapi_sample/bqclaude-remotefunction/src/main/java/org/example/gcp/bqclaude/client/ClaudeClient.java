@@ -38,7 +38,7 @@ import org.example.gcp.bqclaude.tokens.TokenDispatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** */
+/** In charge of executing the interactions with the Claude API. */
 @Singleton
 public class ClaudeClient {
 

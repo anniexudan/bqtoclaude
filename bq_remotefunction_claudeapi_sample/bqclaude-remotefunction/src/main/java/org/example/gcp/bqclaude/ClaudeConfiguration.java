@@ -20,7 +20,7 @@ import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.annotation.NonNull;
 import java.util.List;
 
-/** */
+/** Configuration class, captures the parameters set by the provisioning scripts. */
 @ConfigurationProperties("claude")
 public record ClaudeConfiguration(
     @NonNull String model, @NonNull String version, @NonNull List<String> tokens) {}

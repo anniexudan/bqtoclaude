@@ -58,7 +58,7 @@ public class BqclaudeRemotefunctionFunctionTest {
       assertEquals(HttpStatus.OK, response.getStatus());
       var maybeResponse =
           objectMapper.readValue(
-              response.getBodyAsText(), BQClaudeRemoteFunctionController.FunctionResponse.class);
+              response.getBodyAsText(), BQClaudeRemoteFunctionController.RemoteFunctionResponse.class);
       assertEquals("hi", maybeResponse.replies().getFirst().content().getFirst().text());
     }
   }

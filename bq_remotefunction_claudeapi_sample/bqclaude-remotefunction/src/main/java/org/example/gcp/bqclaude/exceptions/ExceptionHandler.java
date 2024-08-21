@@ -23,7 +23,12 @@ import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Produces;
 import jakarta.inject.Singleton;
 
-/** */
+/**
+ * Translates those errors related with rate limiting, encountered on a Claude API interaction, into
+ * 429 responses so the caller can back off an retry in a while. This solution should internally
+ * manage backoffs and retries but in the case of all of those being exhausted we need to propagate
+ * to the caller.
+ */
 @Produces
 @Singleton
 @Requires(classes = {TokenExhaustedException.class})

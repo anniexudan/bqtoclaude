@@ -15,11 +15,9 @@
  */
 package org.example.gcp.bqclaude.tokens;
 
-import org.example.gcp.bqclaude.exceptions.TokenExhaustedException;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import java.time.Instant;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,10 +26,15 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.example.gcp.bqclaude.ClaudeConfiguration;
 import org.example.gcp.bqclaude.client.Interactions.*;
+import org.example.gcp.bqclaude.exceptions.TokenExhaustedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** */
+/**
+ * In charge of keeping track of the available tokens and dispatch them to callers. The tokens
+ * associated with the same account, at least in the free tier, would have the same limits applied
+ * to them so is better to use tokens from different accounts provisioned for this.
+ */
 @Singleton
 public class TokenDispatcher {
 

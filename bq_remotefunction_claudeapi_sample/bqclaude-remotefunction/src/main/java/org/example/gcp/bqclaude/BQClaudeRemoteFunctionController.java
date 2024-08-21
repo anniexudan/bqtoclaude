@@ -30,6 +30,11 @@ import org.example.gcp.bqclaude.client.Interactions.ClaudeRequest;
 import org.example.gcp.bqclaude.client.Interactions.ClaudeResponse;
 import org.example.gcp.bqclaude.client.Interactions.Body.OK;
 
+/**
+ * This controller acts as the entry point of the remote function logic. Micronaut will take part on
+ * translating the requests and responses handled here into the Cloud Function environment entry
+ * point.
+ */
 @Controller("/")
 public class BQClaudeRemoteFunctionController {
 
@@ -37,7 +42,7 @@ public class BQClaudeRemoteFunctionController {
   @Inject ClaudeConfiguration configuration;
 
   @Post
-  public FunctionResponse postMethod(@Body RemoteFunctionRequest request) {
+  public RemoteFunctionResponse postMethod(@Body RemoteFunctionRequest request) {
     var calls = Optional.ofNullable(request.calls()).orElse(List.of());
     var responses =
         calls.stream()
@@ -52,11 +57,11 @@ public class BQClaudeRemoteFunctionController {
             .collect(Collectors.groupingBy(response -> response.isOk()));
     // check if we got any errors
     return responses.getOrDefault(false, List.of()).isEmpty()
-        ? FunctionResponse.OK(
+        ? RemoteFunctionResponse.OK(
             responses.getOrDefault(true, List.of()).stream()
                 .map(ClaudeResponse::okResponse)
                 .toList())
-        : FunctionResponse.Error(
+        : RemoteFunctionResponse.Error(
             "Errors ocurred in the interaction with claude: \n"
                 + responses.getOrDefault(false, List.of()).stream()
                     .map(ClaudeResponse::toString)
@@ -86,14 +91,14 @@ public class BQClaudeRemoteFunctionController {
   }
 
   @Serdeable
-  public record FunctionResponse(List<OK> replies, String errorMessage) {
+  public record RemoteFunctionResponse(List<OK> replies, String errorMessage) {
 
-    static FunctionResponse OK(List<OK> replies) {
-      return new FunctionResponse(replies, null);
+    static RemoteFunctionResponse OK(List<OK> replies) {
+      return new RemoteFunctionResponse(replies, null);
     }
 
-    static FunctionResponse Error(String errorMessage) {
-      return new FunctionResponse(null, errorMessage);
+    static RemoteFunctionResponse Error(String errorMessage) {
+      return new RemoteFunctionResponse(null, errorMessage);
     }
   }
 }
