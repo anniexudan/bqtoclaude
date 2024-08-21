@@ -28,10 +28,9 @@ There are 3 methods you can use:
 | Feature | Native BQML Functions | Python with BQ Studio | BQ Remote Functions |
 |---------|----------------------|----------------------|---------------------|
 | Preferred by | SQL Developers | Python Developers | Development Power Houses |
-| Collaboration | Easy | Easy | Involves App Team and Data Scientist Team working together |
+| Ease of Use | Easy (SQL Skill Only) | Medium (Python) | Hard (App Development Skill + SQL Skill) |
 | Flexibility | Low | High | High |
 | Claude Model access | Limited (depends on releases) | All Models | All Models |
-| Ease of Use | Easy (SQL Skill Only) | Medium (Python) | Hard (App Development Skill + SQL Skill) |
 | Cost Model | [BQML Pricing](https://cloud.google.com/bigquery/pricing#bqml) | [External Services Pricing](https://cloud.google.com/bigquery/pricing#external_services) | [Cloud Function pricing](https://cloud.google.com/functions/pricing) + [BQ pricing](https://cloud.google.com/bigquery/pricing ) |
 | Limitations | Subject to Preview Terms for BQML + Claude; Limited Model access; | Requires Python knowledge; | Learning curve is high; Separate services; |
 
