@@ -94,7 +94,7 @@ public class TokenDispatcher {
           headers.entrySet().stream()
                   .filter(entry -> entry.getKey().equals(CLAUDE_REQUEST_SHOULDRETRY_KEY))
                   .flatMap(entry -> entry.getValue().stream())
-                  .map(Boolean::getBoolean)
+                  .map(Boolean::parseBoolean)
                   .anyMatch(should -> should)
               // we want to check on both headers retrying may not be related with token limits
               && headers.containsKey(CLAUDE_REQUEST_RETRYAFTER_KEY);

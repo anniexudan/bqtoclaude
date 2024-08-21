@@ -21,18 +21,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.micronaut.serde.annotation.Serdeable;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /** */
 public interface Interactions {
-
-  record ClaudeRequestConfig(int maxTokens, String systemPrompt, Optional<String> message) {
-
-    public static ClaudeRequestConfig parse(
-        int maxTokens, String systemPrompt, List<String> params) {
-      return new ClaudeRequestConfig(maxTokens, systemPrompt, params.stream().findFirst());
-    }
-  }
 
   enum Role {
     USER("user"),
@@ -60,6 +51,15 @@ public interface Interactions {
 
     public ClaudeRequest(String model, List<Message> messages, int maxTokens, String systemPrompt) {
       this(model, maxTokens, messages, null, List.of(), false, systemPrompt, 1.0, null, null);
+    }
+
+    public static ClaudeRequest parse(
+        String model, int maxTokens, String systemPrompt, List<String> params) {
+      return new ClaudeRequest(
+          model,
+          params.stream().map(message -> new Message(Role.USER, message)).toList(),
+          maxTokens,
+          systemPrompt);
     }
   }
 

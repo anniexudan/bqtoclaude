@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import org.example.gcp.bqclaude.client.Interactions.ClaudeRequestConfig;
+import org.example.gcp.bqclaude.client.Interactions.ClaudeRequest;
 import org.example.gcp.bqclaude.client.Interactions.ClaudeResponse;
 import org.example.gcp.bqclaude.client.Interactions.Body.OK;
 
@@ -34,6 +34,7 @@ import org.example.gcp.bqclaude.client.Interactions.Body.OK;
 public class BQClaudeRemoteFunctionController {
 
   @Inject ClaudeClient claudeClient;
+  @Inject ClaudeConfiguration configuration;
 
   @Post
   public FunctionResponse postMethod(@Body RemoteFunctionRequest request) {
@@ -42,12 +43,12 @@ public class BQClaudeRemoteFunctionController {
         calls.stream()
             .map(
                 call ->
-                    ClaudeRequestConfig.parse(
-                        request.getMaxTokens(), request.getSystemPrompt(), call))
-            .map(
-                interaction ->
-                    claudeClient.sendMessageWithRetries(
-                        interaction.message(), interaction.maxTokens(), interaction.systemPrompt()))
+                    ClaudeRequest.parse(
+                        configuration.model(),
+                        request.getMaxTokens(),
+                        request.getSystemPrompt(),
+                        call))
+            .map(claudeRequest -> claudeClient.sendMessageWithRetries(claudeRequest))
             .collect(Collectors.groupingBy(response -> response.isOk()));
     // check if we got any errors
     return responses.getOrDefault(false, List.of()).isEmpty()

@@ -1,5 +1,6 @@
 <configuration>
-    <logger name="io.micronaut.http.client" level="INFO"/>
+    <logger name="io.micronaut.http.client" level="DEBUG"/>
+    <logger name="org.example.gcp.bqclaude" level="DEBUG"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoders are assigned the type
