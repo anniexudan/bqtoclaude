@@ -41,7 +41,7 @@ resource "google_cloudfunctions2_function" "function" {
     max_instance_request_concurrency = 3
     available_memory                 = "2G"
     available_cpu                    = 2
-    timeout_seconds                  = 60
+    timeout_seconds                  = 600
     service_account_email            = google_service_account.bqclaude_sa.email
 
     secret_environment_variables {

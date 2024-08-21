@@ -22,6 +22,9 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.example.gcp.bqclaude.ClaudeConfiguration;
 import org.example.gcp.bqclaude.client.Interactions.*;
@@ -39,11 +42,14 @@ public class TokenDispatcher {
 
   @Inject ClaudeConfiguration configuration;
 
-  private Map<String, Token> tokens = new HashMap<>();
+  private Map<String, Token> tokens = new ConcurrentHashMap<>();
 
   Stream<Token> maybeInit(List<String> configuredTokens) {
     if (tokens.isEmpty()) {
-      return configuredTokens.stream().map(token -> new Token.NotInitialized(token));
+      tokens.putAll(
+          configuredTokens.stream()
+              .map(token -> new Token.NotInitialized(token))
+              .collect(Collectors.toMap(Token::id, Function.identity())));
     }
     return tokens.values().stream();
   }

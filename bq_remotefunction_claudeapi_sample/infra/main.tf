@@ -42,7 +42,7 @@ variable "claude_tokens" {
 }
 
 variable "max_batching_rows" {
-    default = 10
+    default = 3
 }
 
 variable "max_tokens" {
