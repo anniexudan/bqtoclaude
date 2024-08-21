@@ -23,7 +23,10 @@ resource "google_cloudfunctions2_function" "function" {
   build_config {
     runtime     = "java21"
     entry_point = "io.micronaut.gcp.function.http.HttpFunction"
-
+    environment_variables = {
+      # Causes a re-deploy of the function when the source changes
+      "SOURCE_SHA" = data.archive_file.function_zip.output_sha
+    }
     source {
       storage_source {
         bucket = google_storage_bucket.cf_bucket.name
