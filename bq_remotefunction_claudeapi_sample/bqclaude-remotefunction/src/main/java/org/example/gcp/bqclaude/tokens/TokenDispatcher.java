@@ -70,7 +70,9 @@ public class TokenDispatcher {
     LOG.atDebug().log("Token info after request {}", token);
     // update token with most recent known state
     tokens.computeIfPresent(token.id(), (key, tk) -> token);
-    if (!decideIfTokenUsable(token)) throw new TokenExhaustedException("Token exhausted, retry.");
+    if (!decideIfTokenUsable(token) && !response.isOk()) {
+      throw new TokenExhaustedException("Token exhausted, retry.");
+    }
     return response;
   }
 
