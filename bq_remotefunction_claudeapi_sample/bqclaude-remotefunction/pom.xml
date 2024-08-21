@@ -59,7 +59,11 @@
         <dependency>
             <groupId>io.micronaut.serde</groupId>
             <artifactId>micronaut-serde-api</artifactId>
-            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>dev.failsafe</groupId>
+            <artifactId>failsafe</artifactId>
+            <version>3.3.2</version>
         </dependency>
         <dependency>
             <groupId>org.yaml</groupId>
@@ -124,6 +128,7 @@
                         </path>
                     </annotationProcessorPaths>
                     <compilerArgs>
+                        <arg>--enable-preview</arg>
                         <arg>-Amicronaut.processing.group=org.example.gcp.bqclaude</arg>
                         <arg>-Amicronaut.processing.module=bqclaude-remotefunction</arg>
                     </compilerArgs>

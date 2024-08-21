@@ -69,9 +69,9 @@ public class BqclaudeRemotefunctionFunctionTest {
 
     @Produces(MediaType.APPLICATION_JSON)
     @Post(ClaudeClient.CLAUDE_MESSAGES_PATH)
-    Interactions.Response.OKResponse messages() {
-      return new Interactions.Response.OKResponse(
-          List.of(new Interactions.Response.Content("hi", "text")),
+    Interactions.Body.OK messages() {
+      return new Interactions.Body.OK(
+          List.of(new Interactions.Body.Content("hi", "text")),
           "some-id",
           "some-model",
           Interactions.Role.USER,

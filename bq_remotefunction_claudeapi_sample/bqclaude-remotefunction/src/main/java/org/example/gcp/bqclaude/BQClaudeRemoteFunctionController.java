@@ -25,7 +25,10 @@ import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import org.example.gcp.bqclaude.client.Interactions;
+import java.util.stream.Collectors;
+import org.example.gcp.bqclaude.client.Interactions.ClaudeRequestConfig;
+import org.example.gcp.bqclaude.client.Interactions.ClaudeResponse;
+import org.example.gcp.bqclaude.client.Interactions.Body.OK;
 
 @Controller("/")
 public class BQClaudeRemoteFunctionController {
@@ -35,33 +38,28 @@ public class BQClaudeRemoteFunctionController {
   @Post
   public FunctionResponse postMethod(@Body RemoteFunctionRequest request) {
     var calls = Optional.ofNullable(request.calls()).orElse(List.of());
-    var okResponses =
+    var responses =
         calls.stream()
             .map(
                 call ->
-                    ClaudeInteraction.parse(
+                    ClaudeRequestConfig.parse(
                         request.getMaxTokens(), request.getSystemPrompt(), call))
-            .flatMap(
+            .map(
                 interaction ->
-                    claudeClient
-                        .sendMessage(
-                            interaction.message(),
-                            interaction.maxTokens(),
-                            interaction.systemPrompt())
-                        .stream())
-            .takeWhile(Interactions.ClaudeResponse::isOk)
-            .map(Interactions.ClaudeResponse::okResponse)
-            .toList();
-    return calls.size() == okResponses.size() && !calls.isEmpty()
-        ? FunctionResponse.OK(okResponses)
-        : FunctionResponse.Error("something failed");
-  }
-
-  record ClaudeInteraction(int maxTokens, String systemPrompt, Optional<String> message) {
-
-    static ClaudeInteraction parse(int maxTokens, String systemPrompt, List<String> params) {
-      return new ClaudeInteraction(maxTokens, systemPrompt, params.stream().findFirst());
-    }
+                    claudeClient.sendMessageWithRetries(
+                        interaction.message(), interaction.maxTokens(), interaction.systemPrompt()))
+            .collect(Collectors.groupingBy(response -> response.isOk()));
+    // check if we got any errors
+    return responses.getOrDefault(false, List.of()).isEmpty()
+        ? FunctionResponse.OK(
+            responses.getOrDefault(true, List.of()).stream()
+                .map(ClaudeResponse::okResponse)
+                .toList())
+        : FunctionResponse.Error(
+            "Errors ocurred in the interaction with claude: \n"
+                + responses.getOrDefault(false, List.of()).stream()
+                    .map(ClaudeResponse::toString)
+                    .toString());
   }
 
   @Serdeable
@@ -87,10 +85,9 @@ public class BQClaudeRemoteFunctionController {
   }
 
   @Serdeable
-  public record FunctionResponse(
-      List<Interactions.Response.OKResponse> replies, String errorMessage) {
+  public record FunctionResponse(List<OK> replies, String errorMessage) {
 
-    static FunctionResponse OK(List<Interactions.Response.OKResponse> replies) {
+    static FunctionResponse OK(List<OK> replies) {
       return new FunctionResponse(replies, null);
     }
 

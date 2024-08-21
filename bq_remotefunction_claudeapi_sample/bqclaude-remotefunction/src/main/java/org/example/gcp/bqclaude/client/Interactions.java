@@ -26,6 +26,14 @@ import java.util.Optional;
 /** */
 public interface Interactions {
 
+  record ClaudeRequestConfig(int maxTokens, String systemPrompt, Optional<String> message) {
+
+    public static ClaudeRequestConfig parse(
+        int maxTokens, String systemPrompt, List<String> params) {
+      return new ClaudeRequestConfig(maxTokens, systemPrompt, params.stream().findFirst());
+    }
+  }
+
   enum Role {
     USER("user"),
     ASSISTANT("assistant");
@@ -38,7 +46,7 @@ public interface Interactions {
   }
 
   @Serdeable
-  record Request(
+  record ClaudeRequest(
       String model,
       @JsonProperty("max_tokens") int maxTokens,
       List<Message> messages,
@@ -50,7 +58,7 @@ public interface Interactions {
       Double topK,
       Double topP) {
 
-    public Request(String model, List<Message> messages, int maxTokens, String systemPrompt) {
+    public ClaudeRequest(String model, List<Message> messages, int maxTokens, String systemPrompt) {
       this(model, maxTokens, messages, null, List.of(), false, systemPrompt, 1.0, null, null);
     }
   }
@@ -62,33 +70,38 @@ public interface Interactions {
   record Metadata(@JsonProperty("user_id") String userId) {}
 
   @Serdeable
-  record ClaudeResponse(Response response, Map<String, String> headers) {
+  record ClaudeResponse(String tokenId, Body response, Map<String, List<String>> headers) {
 
-    static Optional<ClaudeResponse> empty() {
-      return Optional.of(new ClaudeResponse(new Response.EmptyResponse(), Map.of()));
+    static ClaudeResponse empty() {
+      return new ClaudeResponse("", new Body.Empty(), Map.of());
+    }
+
+    static ClaudeResponse emptyWithHeaders(String tokenId, Map<String, List<String>> headers) {
+      return new ClaudeResponse(tokenId, new Body.Empty(), headers);
     }
 
     public boolean isOk() {
       return switch (this.response()) {
-        case Response.EmptyResponse __ -> false;
-        case Response.ErrorResponse __ -> false;
-        default -> true;
+        case Body.Empty __ -> false;
+        case Body.Failed __ -> false;
+        case Body.RateLimited __ -> false;
+        case Body.OK __ -> true;
       };
     }
 
-    public Response.OKResponse okResponse() {
-      return (Response.OKResponse) response();
+    public Body.OK okResponse() {
+      return (Body.OK) response();
     }
   }
 
   @Serdeable
-  sealed interface Response {
+  sealed interface Body {
 
     @Serdeable
-    public record EmptyResponse() implements Response {}
+    public record Empty() implements Body {}
 
     @Serdeable
-    public record OKResponse(
+    public record OK(
         List<Content> content,
         String id,
         String model,
@@ -97,7 +110,7 @@ public interface Interactions {
         @JsonProperty("stop_sequence") String stopSequence,
         String type,
         Usage usage)
-        implements Response {}
+        implements Body {}
 
     @Serdeable
     public record Content(String text, String type) {}
@@ -107,10 +120,16 @@ public interface Interactions {
         @JsonProperty("input_tokens") int inputTokens,
         @JsonProperty("output_tokens") int outputTokens) {}
 
-    @Serdeable
-    public record ErrorResponse(String type, Error error) implements Response {}
+    public record RateLimited() implements Body {
+      public static Body create() {
+        return new RateLimited();
+      }
+    }
 
     @Serdeable
-    public record Error(String type, String message) {}
+    public record Failed(String type, Detail error) implements Body {}
+
+    @Serdeable
+    public record Detail(String type, String message) {}
   }
 }
