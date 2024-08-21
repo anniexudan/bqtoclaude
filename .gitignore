@@ -1,1 +1,4 @@
-venv/
+*target/
+*terraform.tf*
+*nbactions.xml
+*.terraform*
