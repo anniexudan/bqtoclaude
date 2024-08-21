@@ -2,7 +2,7 @@
 
 This repository stores code samples for BigQuery and Claude integration, taking your data to the next level.
 
-## Use Cases
+## Use Cases Examples
 
 - Marketing departments can leverage user and product data to generate targeted social campaigns at scale.
 - Security departments can decipher log data, convert it into a human-understandable format, and generate appropriate responses.
@@ -28,13 +28,11 @@ There are 3 methods you can use:
 | Feature | Native BQML Functions | Python with BQ Studio | BQ Remote Functions |
 |---------|----------------------|----------------------|---------------------|
 | Preferred by | SQL Developers | Python Developers | Development Power Houses |
-| Collaboration | Easy | Easy | Involves App Team and Data Scientist Team working together |
+| Ease of Use | Easy (SQL Skill Only) | Medium (Python) | Hard (App Development Skill + SQL Skill) |
 | Flexibility | Low | High | High |
 | Claude Model access | Limited (depends on releases) | All Models | All Models |
-| Compute Configurability | Subject to BQ Compute | Limited to runtime compute | Highly configurable in terms of compute and preferred language |
-| Ease of Use | Easy (SQL Skill Only) | Medium (Python) | Hard (App Development Skill + SQL Skill) |
-| Cost Model | [BQML Pricing](https://cloud.google.com/bigquery/pricing#bqml) | [External Services Pricing](https://cloud.google.com/bigquery/pricing#external_services) | Cloud Function pricing + BQ pricing |
-| Limitations | Subject to Preview Terms for BQML + Claude; Limited Model access; In this current release, the rate limit is 240 req/mins | Requires Python knowledge; currently only supports for-loops | Learning curve is high; Separate services; scalability in question, follows cloud function limitations |
+| Cost Model | [BQML Pricing](https://cloud.google.com/bigquery/pricing#bqml) | [External Services Pricing](https://cloud.google.com/bigquery/pricing#external_services) | [Cloud Function pricing](https://cloud.google.com/functions/pricing) + [BQ pricing](https://cloud.google.com/bigquery/pricing ) |
+| Limitations | Subject to Preview Terms for BQML + Claude; Limited Model access; | Requires Python knowledge; | Learning curve is high; Separate services; |
 
 ## Comparing Claude on Vertex AI vs Direct API
 
